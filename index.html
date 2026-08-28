@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trackload: Barbell program tracker for iPhone</title>
+<meta name="description" content="Twelve barbell programs, six progression schemes, per-muscle volume, and a rest timer on the Lock Screen. No account, no analytics, no subscription.">
+<link rel="canonical" href="https://enalmar.github.io/trackload-site/">
+<meta property="og:title" content="Trackload">
+<meta property="og:description" content="A barbell program tracker for iPhone.">
+<meta property="og:image" content="https://enalmar.github.io/trackload-site/assets/og.png">
+<meta property="og:url" content="https://enalmar.github.io/trackload-site/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication",
+ "name":"Trackload","operatingSystem":"iOS 18.0 or later",
+ "applicationCategory":"HealthApplication",
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<style>
+:root {
+  --bg: #0E0E12;
+  --surface: #1A1A21;
+  --text: #F5F5F7;
+  --muted: #9C9CA4;
+  --border: #2C2C2E;
+  --amber: #FFB07A;
+  --coral: #FF6B6A;
+  --magenta: #FF7393;
+  --violet: #C266A0;
+  --gutter: clamp(20px, 5vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: var(--text); text-decoration-color: var(--muted); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--coral); }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---- Hero. The one place the solar sweep appears. ---- */
+
+.hero {
+  position: relative;
+  padding: clamp(64px, 12vw, 128px) 0 clamp(48px, 8vw, 88px);
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% 30% 40% -30%;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,176,122,0.18), rgba(255,107,106,0.10) 35%,
+    rgba(255,115,147,0.05) 60%, transparent 75%);
+  pointer-events: none;
+}
+.hero > * { position: relative; }
+
+.mark { width: 96px; height: 96px; border-radius: 22px; display: block; }
+
+h1 {
+  font-size: clamp(40px, 8vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin: 28px 0 0;
+  text-wrap: balance;
+}
+
+.lede {
+  font-size: clamp(19px, 2.6vw, 24px);
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: 34ch;
+  margin: 20px 0 0;
+  text-wrap: balance;
+}
+
+.requirements { margin-top: 28px; color: var(--muted); font-size: 15px; }
+
+/* ---- Screenshot strip ---- */
+
+.strip {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 8px var(--gutter) 24px;
+  margin: 0 calc(var(--gutter) * -1);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.strip img {
+  width: 230px;
+  flex: 0 0 auto;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  scroll-snap-align: center;
+  background: var(--surface);
+}
+@media (min-width: 860px) {
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+  .strip img { width: 100%; }
+}
+
+/* ---- Sections ---- */
+
+section { padding: clamp(48px, 8vw, 88px) 0; border-top: 1px solid var(--border); }
+
+h2 {
+  font-size: clamp(13px, 1.4vw, 14px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 28px;
+}
+
+h3 { font-size: 21px; letter-spacing: -0.01em; margin: 0 0 8px; font-weight: 600; }
+
+p { margin: 0 0 18px; max-width: 68ch; }
+p:last-child { margin-bottom: 0; }
+.muted { color: var(--muted); }
+
+.grid { display: grid; gap: 36px; }
+@media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; gap: 40px 48px; } }
+
+/* ---- Table ---- */
+
+.table-scroll { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  min-width: 460px;
+}
+th, td { text-align: left; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+th {
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+td:first-child { white-space: nowrap; padding-right: 28px; }
+
+/* ---- Footer ---- */
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 0 64px;
+  color: var(--muted);
+  font-size: 15px;
+}
+footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="mark" src="assets/icon.png" alt="The Trackload app icon: a dumbbell on a warm gradient.">
+    <h1>Trackload</h1>
+    <p class="lede">Quiet and competent. It shows you the number and the rule that produced it, then gets out of the way.</p>
+    <p class="requirements">iPhone, iOS 18 or later. Free, with no in-app purchases.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="strip">
+    <img src="assets/01-today.png" width="460" height="1000" alt="The Today screen: the next session laid out, with every lift, set and weight already decided.">
+    <img src="assets/02-programs.png" width="460" height="1000" alt="The program library, listing twelve programs grouped by experience level.">
+    <img src="assets/03-session.png" width="460" height="1000" alt="An active session: sets logged with one tap and a rest timer counting down.">
+    <img src="assets/04-method.png" width="460" height="1000" alt="The method sheet, explaining the estimated one-rep max formula and every other figure.">
+    <img src="assets/05-volume.png" width="460" height="1000" alt="Weekly volume per muscle, with an anatomy map lit by how much work each muscle took.">
+    <img src="assets/06-lockscreen.png" width="460" height="1000" alt="The rest timer running as a Live Activity on the iPhone Lock Screen.">
+    <img src="assets/07-settings.png" width="460" height="1000" alt="Settings, showing iCloud backup and Health export both switched off by default.">
+  </div>
+</div>
+
+<main class="wrap">
+
+<section>
+  <h2>What it does</h2>
+  <div class="grid">
+    <div>
+      <h3>The programs, whole</h3>
+      <p class="muted">Twelve programs: linear progressions, upper/lower and push/pull/legs splits, and percentage-driven waves. Each one carries its own percentage table rather than an approximation of it. Where a structure could not be represented faithfully, it was left out instead of guessed at.</p>
+    </div>
+    <div>
+      <h3>The next weight, already decided</h3>
+      <p class="muted">Open the app and the session is laid out: every lift, every set, every weight, rounded to plates you actually own. When a lift stalls, the app tells you the weight held and why. It does not console you.</p>
+    </div>
+    <div>
+      <h3>Logging that gets out of the way</h3>
+      <p class="muted">A set is one tap. Add RPE if you want it, or leave it off. A rest timer runs on the Lock Screen and in the Dynamic Island, so the phone can go back in your pocket between sets.</p>
+    </div>
+    <div>
+      <h3>What the numbers say</h3>
+      <p class="muted">Weekly hard sets and tonnage per muscle, with the anatomy map lit by volume. Intensity distribution. Push to pull and quad to hamstring balance. Estimated one-rep max per lift, Epley or Brzycki. Progressive load charts for every exercise.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The progression engine</h2>
+  <p class="muted">This is the part that decides what you lift next. Six schemes run underneath the twelve programs, and the app will always show you which one is running and what it did. A percentage program runs off a training max rather than a true max, so the prescribed weights stay hittable on a bad day.</p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th scope="col">Scheme</th><th scope="col">How the next weight is decided</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Linear</td><td>A fixed increment every session, until a miss.</td></tr>
+        <tr><td>Linear with AMRAP</td><td>As above, but the last set is taken as far as it will go, and a big set earns a double jump.</td></tr>
+        <tr><td>Double progression</td><td>Reps climb inside a range first; weight only moves once the top of the range is met on every set.</td></tr>
+        <tr><td>Three-week waves</td><td>Percentages of a training max across three weeks, then the max itself moves.</td></tr>
+        <tr><td>High-volume waves</td><td>The same idea with more sets per week, for programs built around accumulated work.</td></tr>
+        <tr><td>Tiered</td><td>A heavy tier, a volume tier and an accessory tier, each progressing on its own terms.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Privacy</h2>
+  <p>No account. No analytics. No third-party SDKs. The whole thing is one file on your phone.</p>
+  <p class="muted">iCloud backup and Health export are both optional and both off until you turn them on. <a href="privacy.html">Read the privacy policy</a>.</p>
+</section>
+
+<section>
+  <h2>Built for one thing</h2>
+  <p class="muted">Barbell strength. No cardio scoring, no recovery index, no readiness number, no streaks to keep.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <p>© 2026 Enrique Alabort</p>
+  </div>
+</footer>
+
+</body>
+</html>

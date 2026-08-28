@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support — Trackload</title>
+<meta name="description" content="Help with Trackload: changing units, iCloud backup, Health export, how progression decides a weight, and what to do when a lift stalls.">
+<link rel="canonical" href="https://enalmar.github.io/trackload-site/support.html">
+<meta property="og:title" content="Trackload — Support">
+<meta property="og:description" content="Help with Trackload.">
+<meta property="og:image" content="https://enalmar.github.io/trackload-site/assets/og.png">
+<meta property="og:url" content="https://enalmar.github.io/trackload-site/support.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/icon.png">
+<style>
+:root {
+  --bg: #0E0E12; --text: #F5F5F7; --muted: #9C9CA4; --border: #2C2C2E; --coral: #FF6B6A;
+  --gutter: clamp(20px, 5vw, 40px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: var(--text); text-decoration-color: var(--muted); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--coral); }
+a:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
+header { padding: clamp(48px, 9vw, 96px) 0 8px; }
+.back { font-size: 15px; color: var(--muted); text-decoration: none; }
+.back:hover { color: var(--text); }
+h1 {
+  font-size: clamp(34px, 6vw, 52px); line-height: 1.08; letter-spacing: -0.025em;
+  font-weight: 700; margin: 22px 0 0; text-wrap: balance;
+}
+.lede { color: var(--muted); margin-top: 14px; }
+h2 {
+  font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; margin: 52px 0 8px;
+}
+h3 { font-size: 18px; letter-spacing: -0.01em; margin: 28px 0 6px; font-weight: 600; }
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+ul { margin: 0 0 16px; padding-left: 20px; color: var(--muted); }
+li { margin-bottom: 8px; }
+main { padding-bottom: 24px; }
+footer {
+  border-top: 1px solid var(--border); margin-top: 64px; padding: 36px 0 64px;
+  color: var(--muted); font-size: 15px;
+}
+footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
+.muted { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <a class="back" href="./">← Trackload</a>
+  <h1>Support</h1>
+  <p class="lede">Email <a href="mailto:enriquealabort@gmail.com">enriquealabort@gmail.com</a>. Say which iPhone and which iOS version you are on, and what you expected to happen. One person answers these, so it may take a few days.</p>
+</header>
+
+<main class="wrap">
+
+<h2>Questions</h2>
+
+<h3>How do I change between kilograms and pounds?</h3>
+<p class="muted">Settings → Units. Changing units relabels your existing weights rather than converting them: a 100 kg squat becomes a 100 lb squat. This is deliberate — the alternative silently rewrites your training history — so pick a unit before you start logging.</p>
+
+<h3>Do I need a paid developer account for iCloud backup?</h3>
+<p class="muted">No. That question comes up because iCloud sync needs a paid account on the <em>developer's</em> side to build. As a user you need nothing but an Apple Account signed in on your iPhone, and iCloud Drive switched on.</p>
+
+<h3>What happens to my data if I delete the app?</h3>
+<p class="muted">With iCloud backup off, it goes with the app. With iCloud backup on, your log stays in your own iCloud container and comes back when you reinstall. See the <a href="privacy.html">privacy policy</a> for how to remove it permanently.</p>
+
+<h3>How do I get my sessions into Health?</h3>
+<p class="muted">Settings → Write sessions to Health, then grant permission when iOS asks. Finished sessions appear in Fitness as strength training workouts. Sessions logged before you turned it on are not backfilled.</p>
+
+<h3>How does the app decide my next weight?</h3>
+<p class="muted">Every program runs one of six progression schemes, and the app never hides which. On the Analytics tab, "How these numbers are derived" explains the estimated one-rep max, the training max and the intensity bands. In a session, the weight shown is already rounded to the smallest pair of plates the lift can use.</p>
+
+<h3>A lift has stalled. What now?</h3>
+<p class="muted">The app holds the weight and says so. That is the scheme working: a linear progression that keeps adding weight after a miss is how people get hurt. If it keeps happening on the same lift, the honest answer is usually that the program has run its course — most linear programs have a shelf life of a few months by design. The program library says which ones do.</p>
+
+<h3>Can I edit a program?</h3>
+<p class="muted">You can reorder and remove exercises on any day. Percentage work — a wave ladder, a tier — cannot be re-repped, because those numbers are the program: a wave whose percentages you edited is a different program with the same name.</p>
+
+<h3>Which heart rate straps work?</h3>
+<p class="muted">Any standard Bluetooth LE chest strap. An Apple Watch is not used: HealthKit will not let one app save another app's readings, so a watch's heart rate belongs to the watch's own workout. Heart rate is entirely optional and everything else works without it.</p>
+
+<h2>Known limitations</h2>
+<ul>
+  <li>iPhone only, portrait only. No iPad layout and no Apple Watch app.</li>
+  <li>Barbell strength only. No cardio, no recovery score, no readiness number.</li>
+  <li>No data export beyond Health. Your log is a JSON file in the app's container, but there is no share sheet for it yet.</li>
+  <li>One program at a time. You can switch, and your history is kept, but you cannot run two in parallel.</li>
+  <li>Changing units relabels rather than converts, as above.</li>
+  <li>Estimated one-rep max is not calculated above twelve reps, because the formulae are fitted on low-rep work and a number derived from a set of twenty is not worth charting.</li>
+</ul>
+
+<h2>Contact</h2>
+<p><a href="mailto:enriquealabort@gmail.com">enriquealabort@gmail.com</a></p>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav>
+      <a href="./">Home</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <p>© 2026 Enrique Alabort</p>
+  </div>
+</footer>
+
+</body>
+</html>
