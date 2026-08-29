@@ -112,6 +112,11 @@ h1 {
 }
 .strip img {
   width: 230px;
+  /* Load-bearing. The width and height attributes on each img reserve space so
+     the strip does not jump as the screenshots load, but they also set an
+     intrinsic 1000px height that CSS must release — without this the browser
+     keeps the height and squeezes the width, and every phone comes out narrow. */
+  height: auto;
   flex: 0 0 auto;
   border-radius: 18px;
   border: 1px solid var(--border);
@@ -126,7 +131,7 @@ h1 {
     margin: 0;
     padding: 0;
   }
-  .strip img { width: 100%; }
+  .strip img { width: 100%; height: auto; }
 }
 
 /* ---- Sections ---- */
