@@ -23,24 +23,29 @@
 <style>
 :root {
   --bg: #0E0E12;
-  --surface: #1A1A21;
+  --surface: #16161C;
   --text: #F5F5F7;
   --muted: #9C9CA4;
-  --border: #2C2C2E;
+  --border: #26262B;
   --amber: #FFB07A;
   --coral: #FF6B6A;
   --magenta: #FF7393;
   --violet: #C266A0;
-  --gutter: clamp(20px, 5vw, 40px);
+  --gutter: clamp(22px, 5vw, 48px);
+  --measure: 1120px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
   font-size: 17px;
@@ -49,142 +54,258 @@ body {
   overflow-x: hidden;
 }
 
-a { color: var(--text); text-decoration-color: var(--muted); text-underline-offset: 3px; }
+/* ---- Ambient field ----
+   Fixed to the viewport rather than parented to the hero. The old version was
+   a child of .hero, which clips its overflow, so the sweep stopped dead at the
+   hero's bottom edge and left a visible seam across the page. Fixed means it
+   never seams, and it behaves like light in the room rather than a panel.
+   Rationed the way BRAND.md rations it: nothing here is above 16%. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120vmax 80vmax at 8% -20%,
+      rgba(255, 176, 122, 0.16), rgba(255, 107, 106, 0.07) 38%, transparent 68%),
+    radial-gradient(90vmax 70vmax at 100% 8%,
+      rgba(255, 115, 147, 0.10), rgba(194, 102, 160, 0.05) 40%, transparent 70%);
+}
+
+a { color: var(--text); text-decoration-color: rgba(245,245,247,0.35); text-underline-offset: 4px; }
 a:hover { text-decoration-color: var(--coral); }
-a:focus-visible, button:focus-visible {
+a:focus-visible {
   outline: 2px solid var(--coral);
-  outline-offset: 3px;
+  outline-offset: 4px;
   border-radius: 4px;
 }
 
-.wrap { max-width: 980px; margin: 0 auto; padding: 0 var(--gutter); }
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
 
-/* ---- Hero. The one place the solar sweep appears. ---- */
+/* ---- Shared type ---- */
 
-.hero {
-  position: relative;
-  padding: clamp(64px, 12vw, 128px) 0 clamp(48px, 8vw, 88px);
-  overflow: hidden;
-}
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -30% 30% 40% -30%;
-  background: radial-gradient(circle at 30% 30%,
-    rgba(255,176,122,0.18), rgba(255,107,106,0.10) 35%,
-    rgba(255,115,147,0.05) 60%, transparent 75%);
-  pointer-events: none;
-}
-.hero > * { position: relative; }
-
-.mark { width: 96px; height: 96px; border-radius: 22px; display: block; }
-
-h1 {
-  font-size: clamp(40px, 8vw, 72px);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  font-weight: 700;
-  margin: 28px 0 0;
-  text-wrap: balance;
-}
-
-.lede {
-  font-size: clamp(19px, 2.6vw, 24px);
-  line-height: 1.45;
-  color: var(--muted);
-  max-width: 34ch;
-  margin: 20px 0 0;
-  text-wrap: balance;
-}
-
-.requirements { margin-top: 28px; color: var(--muted); font-size: 15px; }
-
-/* ---- Screenshot strip ---- */
-
-.strip {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding: 8px var(--gutter) 24px;
-  margin: 0 calc(var(--gutter) * -1);
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.strip img {
-  width: 230px;
-  /* Load-bearing. The width and height attributes on each img reserve space so
-     the strip does not jump as the screenshots load, but they also set an
-     intrinsic 1000px height that CSS must release — without this the browser
-     keeps the height and squeezes the width, and every phone comes out narrow. */
-  height: auto;
-  flex: 0 0 auto;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  scroll-snap-align: center;
-  background: var(--surface);
-}
-@media (min-width: 860px) {
-  .strip {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    overflow: visible;
-    margin: 0;
-    padding: 0;
-  }
-  .strip img { width: 100%; height: auto; }
-}
-
-/* ---- Sections ---- */
-
-section { padding: clamp(48px, 8vw, 88px) 0; border-top: 1px solid var(--border); }
-
-h2 {
-  font-size: clamp(13px, 1.4vw, 14px);
-  letter-spacing: 0.16em;
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 600;
-  margin: 0 0 28px;
+  margin: 0 0 18px;
 }
 
-h3 { font-size: 21px; letter-spacing: -0.01em; margin: 0 0 8px; font-weight: 600; }
+h1 {
+  font-size: clamp(44px, 8vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 0;
+  text-wrap: balance;
+}
 
-p { margin: 0 0 18px; max-width: 68ch; }
+h2 {
+  font-size: clamp(30px, 4.5vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 18px; }
 p:last-child { margin-bottom: 0; }
 .muted { color: var(--muted); }
 
-.grid { display: grid; gap: 36px; }
-@media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; gap: 40px 48px; } }
+/* ---- Hero ---- */
 
-/* ---- Table ---- */
+.hero {
+  padding: clamp(56px, 10vw, 120px) 0 clamp(40px, 7vw, 80px);
+  text-align: center;
+}
+
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 clamp(28px, 5vw, 44px);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.lockup img { width: 34px; height: 34px; border-radius: 9px; display: block; }
+
+.lede {
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: clamp(20px, 3vw, 28px) auto 0;
+  text-wrap: balance;
+}
+
+.meta {
+  margin-top: 26px;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Devices ----
+   height:auto is load-bearing. Each img carries width and height attributes so
+   the page reserves its space and does not jump as the screenshots load, but
+   those attributes also set an intrinsic pixel height that CSS must release —
+   without it the browser keeps the height and squeezes the width instead. */
+
+.device {
+  position: relative;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.device img {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  display: block;
+  border-radius: clamp(28px, 3.4vw, 42px);
+  border: 1px solid rgba(255,255,255,0.09);
+  background: var(--surface);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.4),
+    0 24px 60px rgba(0,0,0,0.55);
+}
+/* A soft bloom behind the glass, so the near-black capture separates from the
+   near-black page without needing a hard frame around it. */
+.device::before {
+  content: "";
+  position: absolute;
+  inset: 8% -14% -6%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side,
+    rgba(255,107,106,0.16), rgba(255,115,147,0.07) 55%, transparent 78%);
+  filter: blur(28px);
+}
+
+.hero .device { margin-top: clamp(44px, 7vw, 76px); }
+.hero .device img { max-width: min(340px, 76vw); }
+
+/* ---- Feature sections ---- */
+
+.feature {
+  padding: clamp(48px, 6vw, 88px) 0;
+}
+.feature .inner {
+  display: grid;
+  gap: clamp(36px, 6vw, 80px);
+  align-items: center;
+}
+.feature-text { max-width: 46ch; }
+
+@media (min-width: 900px) {
+  .feature .inner { grid-template-columns: 1fr 1fr; }
+  .feature--flip .feature-text { order: 2; }
+}
+
+/* ---- Engine table ---- */
+
+.engine { padding: clamp(48px, 6vw, 88px) 0; }
+.engine .intro { max-width: 58ch; margin-bottom: clamp(32px, 5vw, 48px); }
 
 .table-scroll { overflow-x: auto; }
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 15.5px;
   font-variant-numeric: tabular-nums;
-  min-width: 460px;
+  min-width: 520px;
 }
-th, td { text-align: left; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+th, td {
+  text-align: left;
+  padding: 18px 20px 18px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:first-child th { border-bottom-color: rgba(255,255,255,0.16); }
 th {
-  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--muted); font-weight: 600;
 }
-td:first-child { white-space: nowrap; padding-right: 28px; }
+td:first-child {
+  white-space: nowrap;
+  padding-right: 36px;
+  font-weight: 600;
+}
+td:last-child { color: var(--muted); }
 
-/* ---- Footer ---- */
+/* ---- Privacy statement ---- */
+
+.privacy { padding: clamp(48px, 6vw, 88px) 0; }
+.privacy .inner {
+  display: grid;
+  gap: clamp(36px, 6vw, 80px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .privacy .inner { grid-template-columns: 1fr 1fr; }
+}
+.statement {
+  font-size: clamp(24px, 3.4vw, 38px);
+  line-height: 1.22;
+  letter-spacing: -0.024em;
+  font-weight: 600;
+  margin: 0 0 24px;
+  text-wrap: balance;
+}
+
+/* ---- Close ---- */
+
+.close {
+  padding: clamp(48px, 6vw, 88px) 0 clamp(40px, 6vw, 72px);
+  text-align: center;
+}
+.close p { max-width: 40ch; margin-left: auto; margin-right: auto; }
 
 footer {
   border-top: 1px solid var(--border);
-  padding: 40px 0 64px;
+  padding: 36px 0 64px;
   color: var(--muted);
   font-size: 15px;
 }
-footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
+footer .inner {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+footer nav { display: flex; gap: 24px; flex-wrap: wrap; }
+footer p { margin: 0; }
+
+/* ---- Scroll reveal ----
+   Scroll-driven CSS animations, so there is no JavaScript on this page beyond
+   the JSON-LD block. Where the browser does not support them the content is
+   simply there, which is the correct fallback rather than a hidden page waiting
+   on a script that may never run. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
 }
 </style>
 </head>
@@ -192,84 +313,142 @@ footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
 
 <header class="hero">
   <div class="wrap">
-    <img class="mark" src="assets/icon.png" alt="The Trackload app icon: a dumbbell on a warm gradient.">
-    <h1>Trackload</h1>
-    <p class="lede">Quiet and competent. It shows you the number and the rule that produced it, then gets out of the way.</p>
-    <p class="requirements">iPhone, iOS 18 or later. Free, with no in-app purchases.</p>
+    <p class="lockup">
+      <img src="assets/icon.png" alt="" width="34" height="34">
+      Trackload
+    </p>
+    <h1>The next weight,<br>already decided.</h1>
+    <p class="lede">Twelve barbell programs, carried whole. Trackload works out what you lift next, then gets out of the way while you lift it.</p>
+    <p class="meta">iPhone · iOS 18 or later · Free</p>
+    <figure class="device">
+      <img src="assets/01-today.png" width="644" height="1400" alt="The Today screen: the next session laid out, with every lift, set and weight already decided.">
+    </figure>
   </div>
 </header>
 
-<div class="wrap">
-  <div class="strip">
-    <img src="assets/01-today.png" width="460" height="1000" alt="The Today screen: the next session laid out, with every lift, set and weight already decided.">
-    <img src="assets/02-programs.png" width="460" height="1000" alt="The program library, listing twelve programs grouped by experience level.">
-    <img src="assets/03-session.png" width="460" height="1000" alt="An active session: sets logged with one tap and a rest timer counting down.">
-    <img src="assets/04-method.png" width="460" height="1000" alt="The method sheet, explaining the estimated one-rep max formula and every other figure.">
-    <img src="assets/05-volume.png" width="460" height="1000" alt="Weekly volume per muscle, with an anatomy map lit by how much work each muscle took.">
-    <img src="assets/06-lockscreen.png" width="460" height="1000" alt="The rest timer running as a Live Activity on the iPhone Lock Screen.">
-    <img src="assets/07-settings.png" width="460" height="1000" alt="Settings, showing iCloud backup and Health export both switched off by default.">
+<main>
+
+<section class="feature">
+  <div class="wrap inner">
+    <div class="feature-text reveal">
+      <p class="eyebrow">The programs</p>
+      <h2>Twelve programs, carried whole</h2>
+      <p class="muted">Linear progressions, upper/lower and push/pull/legs splits, and percentage-driven waves. Each one carries its own percentage table rather than an approximation of it.</p>
+      <p class="muted">Where a structure could not be represented faithfully, it was left out instead of guessed at.</p>
+    </div>
+    <figure class="device reveal">
+      <img src="assets/02-programs.png" width="644" height="1400" alt="The program library, listing twelve programs grouped by experience level.">
+    </figure>
   </div>
-</div>
+</section>
 
-<main class="wrap">
+<section class="feature feature--flip">
+  <div class="wrap inner">
+    <div class="feature-text reveal">
+      <p class="eyebrow">Logging</p>
+      <h2>A set is one tap</h2>
+      <p class="muted">Every weight is already there, rounded to plates you actually own. Add RPE if you want it, or leave it off.</p>
+      <p class="muted">A rest timer runs on the Lock Screen and in the Dynamic Island, so the phone can go back in your pocket between sets.</p>
+    </div>
+    <figure class="device reveal">
+      <img src="assets/03-session.png" width="644" height="1400" alt="An active session: sets logged with one tap and a rest timer counting down.">
+    </figure>
+  </div>
+</section>
 
-<section>
-  <h2>What it does</h2>
-  <div class="grid">
-    <div>
-      <h3>The programs, whole</h3>
-      <p class="muted">Twelve programs: linear progressions, upper/lower and push/pull/legs splits, and percentage-driven waves. Each one carries its own percentage table rather than an approximation of it. Where a structure could not be represented faithfully, it was left out instead of guessed at.</p>
+<section class="feature">
+  <div class="wrap inner">
+    <div class="feature-text reveal">
+      <p class="eyebrow">Nothing hidden</p>
+      <h2>Every rule, shown</h2>
+      <p class="muted">The app never asks you to trust a number. Each figure comes with the formula behind it and the reason that formula was chosen over the alternative.</p>
+      <p class="muted">When a lift stalls, it tells you the weight held and why. It does not console you.</p>
     </div>
-    <div>
-      <h3>The next weight, already decided</h3>
-      <p class="muted">Open the app and the session is laid out: every lift, every set, every weight, rounded to plates you actually own. When a lift stalls, the app tells you the weight held and why. It does not console you.</p>
+    <figure class="device reveal">
+      <img src="assets/04-method.png" width="644" height="1400" alt="The method sheet, explaining the estimated one-rep max formula and every other figure.">
+    </figure>
+  </div>
+</section>
+
+<section class="feature feature--flip">
+  <div class="wrap inner">
+    <div class="feature-text reveal">
+      <p class="eyebrow">The numbers</p>
+      <h2>Volume per muscle, weekly</h2>
+      <p class="muted">Hard sets and tonnage for every muscle, with the anatomy map lit by both. Intensity distribution, so you can see whether your heavy days are actually heavy.</p>
+      <p class="muted">Push to pull and quad to hamstring balance. Estimated one-rep max per lift, Epley or Brzycki.</p>
     </div>
-    <div>
-      <h3>Logging that gets out of the way</h3>
-      <p class="muted">A set is one tap. Add RPE if you want it, or leave it off. A rest timer runs on the Lock Screen and in the Dynamic Island, so the phone can go back in your pocket between sets.</p>
+    <figure class="device reveal">
+      <img src="assets/05-volume.png" width="644" height="1400" alt="Weekly volume per muscle, with an anatomy map lit by how much work each muscle took.">
+    </figure>
+  </div>
+</section>
+
+<section class="feature">
+  <div class="wrap inner">
+    <div class="feature-text reveal">
+      <p class="eyebrow">Between sets</p>
+      <h2>The timer runs on the Lock Screen</h2>
+      <p class="muted">Start a set and the rest clock carries on without the app open, as a Live Activity on the Lock Screen and in the Dynamic Island.</p>
+      <p class="muted">It keeps counting past zero, because how far over you are is the number that decides whether the next set is still the set you planned.</p>
     </div>
-    <div>
-      <h3>What the numbers say</h3>
-      <p class="muted">Weekly hard sets and tonnage per muscle, with the anatomy map lit by volume. Intensity distribution. Push to pull and quad to hamstring balance. Estimated one-rep max per lift, Epley or Brzycki. Progressive load charts for every exercise.</p>
+    <figure class="device reveal">
+      <img src="assets/06-lockscreen.png" width="644" height="1400" alt="The rest timer running as a Live Activity on the iPhone Lock Screen.">
+    </figure>
+  </div>
+</section>
+
+<section class="engine">
+  <div class="wrap">
+    <div class="intro reveal">
+      <p class="eyebrow">Underneath</p>
+      <h2>Six ways to decide the next weight</h2>
+      <p class="muted">Every program runs one of six progression schemes, and the app always shows which. Percentage programs run off a training max rather than a true max, so the prescribed weights stay hittable on a bad day.</p>
+    </div>
+    <div class="table-scroll reveal">
+      <table>
+        <thead>
+          <tr><th scope="col">Scheme</th><th scope="col">How the next weight is decided</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Linear</td><td>A fixed increment every session, until a miss.</td></tr>
+          <tr><td>Linear with AMRAP</td><td>As above, but the last set is taken as far as it will go, and a big set earns a double jump.</td></tr>
+          <tr><td>Double progression</td><td>Reps climb inside a range first; weight only moves once the top of the range is met on every set.</td></tr>
+          <tr><td>Three-week waves</td><td>Percentages of a training max across three weeks, then the max itself moves.</td></tr>
+          <tr><td>High-volume waves</td><td>The same idea with more sets per week, for programs built around accumulated work.</td></tr>
+          <tr><td>Tiered</td><td>A heavy tier, a volume tier and an accessory tier, each progressing on its own terms.</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<section>
-  <h2>The progression engine</h2>
-  <p class="muted">This is the part that decides what you lift next. Six schemes run underneath the twelve programs, and the app will always show you which one is running and what it did. A percentage program runs off a training max rather than a true max, so the prescribed weights stay hittable on a bad day.</p>
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr><th scope="col">Scheme</th><th scope="col">How the next weight is decided</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Linear</td><td>A fixed increment every session, until a miss.</td></tr>
-        <tr><td>Linear with AMRAP</td><td>As above, but the last set is taken as far as it will go, and a big set earns a double jump.</td></tr>
-        <tr><td>Double progression</td><td>Reps climb inside a range first; weight only moves once the top of the range is met on every set.</td></tr>
-        <tr><td>Three-week waves</td><td>Percentages of a training max across three weeks, then the max itself moves.</td></tr>
-        <tr><td>High-volume waves</td><td>The same idea with more sets per week, for programs built around accumulated work.</td></tr>
-        <tr><td>Tiered</td><td>A heavy tier, a volume tier and an accessory tier, each progressing on its own terms.</td></tr>
-      </tbody>
-    </table>
+<section class="privacy">
+  <div class="wrap inner">
+    <div class="feature-text reveal">
+      <p class="eyebrow">Where your training lives</p>
+      <p class="statement">No account. No analytics. The whole thing is one file on your phone.</p>
+      <p class="muted">No sign-up, no crash reporting, no third-party SDKs, no advertising. iCloud backup and Health export are both optional and both off until you turn them on.</p>
+      <p class="muted"><a href="privacy.html">Read the privacy policy</a></p>
+    </div>
+    <figure class="device reveal">
+      <img src="assets/07-settings.png" width="644" height="1400" alt="Settings, showing iCloud backup and Health export both switched off by default.">
+    </figure>
   </div>
 </section>
 
-<section>
-  <h2>Privacy</h2>
-  <p>No account. No analytics. No third-party SDKs. The whole thing is one file on your phone.</p>
-  <p class="muted">iCloud backup and Health export are both optional and both off until you turn them on. <a href="privacy.html">Read the privacy policy</a>.</p>
-</section>
-
-<section>
-  <h2>Built for one thing</h2>
-  <p class="muted">Barbell strength. No cardio scoring, no recovery index, no readiness number, no streaks to keep.</p>
+<section class="close reveal">
+  <div class="wrap">
+    <h2>Built for one thing</h2>
+    <p class="muted">Barbell strength. No cardio scoring, no recovery index, no readiness number, no streaks to keep.</p>
+    <p class="meta">iPhone · iOS 18 or later · Free, with no in-app purchases</p>
+  </div>
 </section>
 
 </main>
 
 <footer>
-  <div class="wrap">
+  <div class="wrap inner">
     <nav>
       <a href="support.html">Support</a>
       <a href="privacy.html">Privacy</a>
