@@ -1,0 +1,4 @@
+.DS_Store
+
+# SMB leftovers from the NAS era
+.smbdelete*
