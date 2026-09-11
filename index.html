@@ -18,6 +18,7 @@
 {"@context":"https://schema.org","@type":"SoftwareApplication",
  "name":"Trackload","operatingSystem":"iOS 18.0 or later",
  "applicationCategory":"HealthApplication",
+ "downloadUrl":"https://apps.apple.com/app/trackload-lifting-tracker/id6799491191",
  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 <style>
@@ -118,6 +119,16 @@ p:last-child { margin-bottom: 0; }
 
 /* ---- Hero ---- */
 
+.appstore { margin-top: 30px; }
+.appstore-link {
+  display: inline-block; padding: 14px 28px; border-radius: 12px;
+  background: var(--text); color: var(--bg); text-decoration: none;
+  font-weight: 600; font-size: 16px; letter-spacing: -0.01em;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+.appstore-link:hover { background: #fff; transform: translateY(-1px); }
+.appstore-link:focus-visible { outline: 2px solid var(--coral); outline-offset: 5px; }
+.close .appstore { margin-top: 26px; }
 .hero {
   padding: clamp(56px, 10vw, 120px) 0 clamp(40px, 7vw, 80px);
   text-align: center;
@@ -320,6 +331,11 @@ footer p { margin: 0; }
     <h1>The next weight,<br>already decided.</h1>
     <p class="lede">Twelve barbell programs, carried whole. Trackload works out what you lift next, then gets out of the way while you lift it.</p>
     <p class="meta">iPhone · iOS 18 or later · Free</p>
+    <p class="appstore">
+      <a class="appstore-link" href="https://apps.apple.com/app/trackload-lifting-tracker/id6799491191">
+        Download on the App Store
+      </a>
+    </p>
     <figure class="device">
       <img src="assets/01-today.png" width="644" height="1400" alt="The Today screen: the next session laid out, with every lift, set and weight already decided.">
     </figure>
@@ -442,6 +458,7 @@ footer p { margin: 0; }
     <h2>Built for one thing</h2>
     <p class="muted">Barbell strength. No cardio scoring, no recovery index, no readiness number, no streaks to keep.</p>
     <p class="meta">iPhone · iOS 18 or later · Free, with no in-app purchases</p>
+    <p class="appstore"><a class="appstore-link" href="https://apps.apple.com/app/trackload-lifting-tracker/id6799491191">Download on the App Store</a></p>
   </div>
 </section>
 
