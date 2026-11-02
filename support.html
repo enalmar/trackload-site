@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Support — Trackload</title>
-<meta name="description" content="Help with Trackload: changing units, iCloud backup, Health export, how progression decides a weight, and what to do when a lift stalls.">
+<meta name="description" content="Help with Trackload: changing your plan with an LLM, the Mac folder, the free LLM changes and Restore purchase, units, iCloud backup, Health export and how progression decides a weight.">
 <link rel="canonical" href="https://trackload.enalmar.uk/support.html">
 <meta property="og:title" content="Trackload — Support">
 <meta property="og:description" content="Help with Trackload.">
@@ -12,112 +12,260 @@
 <meta property="og:url" content="https://trackload.enalmar.uk/support.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
 <style>
+/* The landing page's tokens: the app's Teal palette, light and dark. */
 :root {
-  --bg: #0E0E12; --text: #F5F5F7; --muted: #9C9CA4; --border: #2C2C2E; --coral: #FF6B6A;
-  --gutter: clamp(20px, 5vw, 40px);
+  --ground: #F2F2F7;
+  --card: #FFFFFF;
+  --ink: #000000;
+  --muted: #5B5B60;
+  --hairline: rgba(60, 60, 67, 0.16);
+  --tint: #0A7285;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 10px 28px rgba(0, 0, 0, 0.07);
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --gutter: clamp(16px, 5vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #000000;
+    --card: #1C1C1E;
+    --ink: #FFFFFF;
+    --muted: #A1A1A8;
+    --hairline: rgba(235, 235, 245, 0.16);
+    --tint: #40C8E0;
+    --shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
 }
 *, *::before, *::after { box-sizing: border-box; }
-html {
-  background: var(--bg);
-  -webkit-text-size-adjust: 100%;
-}
+html { background: var(--ground); -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; background: transparent; color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
-  font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
-/* The same fixed ambient field as the landing page: never seams, and it is the
-   one place the solar sweep appears. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(120vmax 80vmax at 8% -20%,
-      rgba(255, 176, 122, 0.13), rgba(255, 107, 106, 0.06) 38%, transparent 68%),
-    radial-gradient(90vmax 70vmax at 100% 8%,
-      rgba(255, 115, 147, 0.08), rgba(194, 102, 160, 0.04) 40%, transparent 70%);
+a { color: var(--tint); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--tint); outline-offset: 3px; border-radius: 4px; }
+code { font-family: var(--mono); font-size: 0.9em; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 var(--gutter); }
+header { padding: 40px 0 8px; }
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
 }
-a { color: var(--text); text-decoration-color: var(--muted); text-underline-offset: 3px; }
-a:hover { text-decoration-color: var(--coral); }
-a:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 4px; }
-.wrap { max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
-header { padding: clamp(48px, 9vw, 96px) 0 8px; }
-.back { font-size: 15px; color: var(--muted); text-decoration: none; }
-.back:hover { color: var(--text); }
+.back img { width: 28px; height: 28px; border-radius: 7px; display: block; }
 h1 {
-  font-size: clamp(38px, 6.5vw, 60px); line-height: 1.05; letter-spacing: -0.032em;
-  font-weight: 700; margin: 22px 0 0; text-wrap: balance;
+  font-family: var(--display);
+  font-size: clamp(38px, 6vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin: 40px 0 16px;
 }
-.lede { color: var(--muted); margin-top: 14px; }
 h2 {
-  font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted); font-weight: 600; margin: 52px 0 8px;
+  font-family: var(--display);
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 56px 0 16px;
 }
-h3 { font-size: 18px; letter-spacing: -0.01em; margin: 28px 0 6px; font-weight: 600; }
-p { margin: 0 0 16px; }
-p:last-child { margin-bottom: 0; }
-ul { margin: 0 0 16px; padding-left: 20px; color: var(--muted); }
-li { margin-bottom: 8px; }
-main { padding-bottom: 24px; }
+p { margin: 0 0 14px; }
+.lede { font-size: 19px; color: var(--muted); }
+main { padding-bottom: 72px; }
+
+/* Questions as an inset grouped list, like Settings: one card per topic,
+   each question opening in place. */
+.group {
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+details + details { border-top: 1px solid var(--hairline); }
+summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 48px 16px 20px;
+  font-weight: 600;
+  position: relative;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 160ms ease;
+}
+details[open] summary::after { transform: translateY(-30%) rotate(225deg); }
+details > div { padding: 0 20px 18px; color: var(--muted); }
+details > div p:last-child { margin-bottom: 0; }
+
+ul.limits { padding-left: 20px; color: var(--muted); }
+ul.limits li { margin-bottom: 8px; }
+
 footer {
-  border-top: 1px solid var(--border); margin-top: 64px; padding: 36px 0 64px;
-  color: var(--muted); font-size: 15px;
+  border-top: 1px solid var(--hairline);
+  padding: 28px 0 56px;
+  color: var(--muted);
+  font-size: 15px;
 }
-footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
-.muted { color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; justify-content: space-between; }
+footer nav { display: flex; gap: 24px; }
+footer p { margin: 0; }
+
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+  * { transition: none !important; }
 }
 </style>
 </head>
 <body>
 
 <header class="wrap">
-  <a class="back" href="./">← Trackload</a>
-  <h1>Support</h1>
-  <p class="lede">Email <a href="mailto:support@enalmar.uk">support@enalmar.uk</a>. Say which iPhone and which iOS version you are on, and what you expected to happen. One person answers these, so it may take a few days.</p>
+  <a class="back" href="./"><img src="assets/icon.png" alt="" width="28" height="28">Trackload</a>
 </header>
 
 <main class="wrap">
 
-<h2>Questions</h2>
+<h1>Support</h1>
+<p class="lede">Email <a href="mailto:support@enalmar.uk">support@enalmar.uk</a>. Say which iPhone and which iOS version you are on, and what you expected to happen. One person answers these, so it may take a few days.</p>
 
-<h3>How do I change between kilograms and pounds?</h3>
-<p class="muted">Settings → Units. Changing units relabels your existing weights rather than converting them: a 100 kg squat becomes a 100 lb squat. This is deliberate — the alternative silently rewrites your training history — so pick a unit before you start logging.</p>
+<h2>Changing your plan with an LLM</h2>
+<div class="group">
+  <details>
+    <summary>Which LLM does Trackload work with?</summary>
+    <div>
+      <p>Whichever chat assistant you already use. Trackload does not connect to one: Copy for LLM on the Build tab puts your request on the clipboard with your plan, the rules of the plan language, your current weights and your last four weeks of training. Paste that into the assistant, then copy its whole reply and tap Paste reply.</p>
+      <p>The brief explains the plan language in full, so an assistant that follows written instructions can answer without being taught anything else.</p>
+    </div>
+  </details>
+  <details>
+    <summary>What can I ask for?</summary>
+    <div>
+      <p>A new program from scratch, or changes to the one you run: swap an exercise, change sets and reps, train a different number of days, change how a lift progresses. Weights can be overridden too: one session lighter, a weight held until a date, a training max reset, or a deload now.</p>
+      <p>A change to one of the twelve built-in programs lands on your own copy of it. The library's version stays as it was.</p>
+    </div>
+  </details>
+  <details>
+    <summary>The reply has an error in it</summary>
+    <div>
+      <p>Trackload lists every line it could not read, with the reason, and applies nothing. Tap Copy error for LLM and paste that back into the same conversation: it carries the errors and the plan they were found in, so the assistant can fix just those lines.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Does anything I logged change?</summary>
+    <div>
+      <p>No. A change reaches the plan and the weights you are about to lift, never a session you have already logged. Nothing at all changes until you tap Apply on the review.</p>
+    </div>
+  </details>
+  <details>
+    <summary>What counts as an LLM change?</summary>
+    <div>
+      <p>Applying a pasted reply that changes something counts once. A reply with errors, a reply that changes nothing, and a review you discard cost nothing. Edits you make by hand in the app never count.</p>
+      <p>Applying a program.txt edit from a Mac counts as an LLM change too, because the app cannot tell an assistant's edit from your own. The Changed on your Mac card says so before you apply.</p>
+    </div>
+  </details>
+  <details>
+    <summary>How do I use it from a Mac?</summary>
+    <div>
+      <p>Turn on iCloud backup in Settings. A Trackload folder appears in your iCloud Drive with the program you run as <code>program.txt</code>, your current weights as <code>lifts.csv</code> and your history as CSV. Edit <code>program.txt</code>, or let an assistant on your Mac that can open files edit it, then open Trackload on your phone: the edit waits on the Build tab as Changed on your Mac, with the same review a pasted reply gets.</p>
+      <p>Pasting from the phone needs no iCloud at all. Only the folder does.</p>
+    </div>
+  </details>
+  <details>
+    <summary>I bought the unlock on another phone</summary>
+    <div>
+      <p>Settings › Restore purchase, or Restore purchase on the unlock screen. The purchase belongs to your Apple Account, so it comes back on any phone signed in to it.</p>
+    </div>
+  </details>
+</div>
 
-<h3>Do I need a paid developer account for iCloud backup?</h3>
-<p class="muted">No. That question comes up because iCloud sync needs a paid account on the <em>developer's</em> side to build. As a user you need nothing but an Apple Account signed in on your iPhone, and iCloud Drive switched on.</p>
+<h2>Training</h2>
+<div class="group">
+  <details>
+    <summary>How does the app decide my next weight?</summary>
+    <div>
+      <p>Every program runs one of six progression schemes, and the app never hides which. On the Analytics tab, "How these numbers are derived" explains the estimated one-rep max, the training max and the intensity bands. In a session, the weight shown is already rounded to the smallest pair of plates the lift can use.</p>
+    </div>
+  </details>
+  <details>
+    <summary>A lift has stalled. What now?</summary>
+    <div>
+      <p>The app holds the weight and says so. That is the scheme working: a linear progression that keeps adding weight after a miss is how people get hurt. If it keeps happening on the same lift, the program may have run its course — most linear programs have a shelf life of a few months by design. You can also ask an LLM to change the lift, or deload it, and see the change before it applies.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Can I edit a program?</summary>
+    <div>
+      <p>Yes. On the Build tab, Make a copy to edit turns one of the twelve programs into your own, and Edit by hand changes days, exercises, sets, reps, the progression rule, starting weights, the name and the schedule. Editing by hand is free and unlimited.</p>
+    </div>
+  </details>
+</div>
 
-<h3>What happens to my data if I delete the app?</h3>
-<p class="muted">With iCloud backup off, it goes with the app. With iCloud backup on, your log stays in your own iCloud container and comes back when you reinstall. See the <a href="privacy.html">privacy policy</a> for how to remove it permanently.</p>
-
-<h3>How do I get my sessions into Health?</h3>
-<p class="muted">Settings → Write sessions to Health, then grant permission when iOS asks. Finished sessions appear in Fitness as strength training workouts. Sessions logged before you turned it on are not backfilled.</p>
-
-<h3>How does the app decide my next weight?</h3>
-<p class="muted">Every program runs one of six progression schemes, and the app never hides which. On the Analytics tab, "How these numbers are derived" explains the estimated one-rep max, the training max and the intensity bands. In a session, the weight shown is already rounded to the smallest pair of plates the lift can use.</p>
-
-<h3>A lift has stalled. What now?</h3>
-<p class="muted">The app holds the weight and says so. That is the scheme working: a linear progression that keeps adding weight after a miss is how people get hurt. If it keeps happening on the same lift, the honest answer is usually that the program has run its course — most linear programs have a shelf life of a few months by design. The program library says which ones do.</p>
-
-<h3>Can I edit a program?</h3>
-<p class="muted">You can reorder and remove exercises on any day. Percentage work — a wave ladder, a tier — cannot be re-repped, because those numbers are the program: a wave whose percentages you edited is a different program with the same name.</p>
-
-<h3>Which heart rate straps work?</h3>
-<p class="muted">Any standard Bluetooth LE chest strap. An Apple Watch is not used: HealthKit will not let one app save another app's readings, so a watch's heart rate belongs to the watch's own workout. Heart rate is entirely optional and everything else works without it.</p>
+<h2>Settings and data</h2>
+<div class="group">
+  <details>
+    <summary>How do I change between kilograms and pounds?</summary>
+    <div>
+      <p>Settings › Units. Changing units relabels your existing weights rather than converting them: a 100 kg squat becomes a 100 lb squat. This is deliberate — the alternative silently rewrites your training history — so pick a unit before you start logging.</p>
+    </div>
+  </details>
+  <details>
+    <summary>What happens to my data if I delete the app?</summary>
+    <div>
+      <p>With iCloud backup off, it goes with the app. With iCloud backup on, your log stays in your own iCloud container and comes back when you reinstall, and the Trackload folder stays in iCloud Drive. See the <a href="privacy.html">privacy policy</a> for how to remove both.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Can I export my training?</summary>
+    <div>
+      <p>With iCloud backup on, the Trackload folder in iCloud Drive holds every set and session you have logged as CSV, and your current weights, updated as you train. Finished sessions can also go to Health.</p>
+    </div>
+  </details>
+  <details>
+    <summary>How do I get my sessions into Health?</summary>
+    <div>
+      <p>Settings › Write sessions to Health, then grant permission when iOS asks. Finished sessions appear in Fitness as strength training workouts. Sessions logged before you turned it on are not backfilled.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Do I need a paid developer account for iCloud backup?</summary>
+    <div>
+      <p>No. That question comes up because iCloud sync needs a paid account on the <em>developer's</em> side to build. As a user you need nothing but an Apple Account signed in on your iPhone, and iCloud Drive switched on.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Which heart rate straps work?</summary>
+    <div>
+      <p>Any standard Bluetooth LE chest strap. An Apple Watch is not used: HealthKit will not let one app save another app's readings, so a watch's heart rate belongs to the watch's own workout. Heart rate is entirely optional and everything else works without it.</p>
+    </div>
+  </details>
+</div>
 
 <h2>Known limitations</h2>
-<ul>
+<ul class="limits">
   <li>iPhone only, portrait only. No iPad layout and no Apple Watch app.</li>
-  <li>Barbell strength only. No cardio, no recovery score, no readiness number.</li>
-  <li>No data export beyond Health. Your log is a JSON file in the app's container, but there is no share sheet for it yet.</li>
+  <li>Barbell strength only. No cardio, no recovery index, no readiness number.</li>
   <li>One program at a time. You can switch, and your history is kept, but you cannot run two in parallel.</li>
+  <li>Trackload does not talk to an LLM itself. Every change goes through the clipboard or the Mac folder, and through the review.</li>
   <li>Changing units relabels rather than converts, as above.</li>
   <li>Estimated one-rep max is not calculated above twelve reps, because the formulae are fitted on low-rep work and a number derived from a set of twenty is not worth charting.</li>
 </ul>
@@ -129,7 +277,7 @@ footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
 
 <footer>
   <div class="wrap">
-    <nav>
+    <nav aria-label="Footer">
       <a href="./">Home</a>
       <a href="privacy.html">Privacy</a>
     </nav>

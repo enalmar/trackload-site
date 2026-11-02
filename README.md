@@ -11,8 +11,22 @@ Published with GitHub Pages from `main` at the repository root.
 - `index.html` — what the app is
 - `privacy.html` — linked from the App Store listing, and required for it
 - `support.html` — likewise
-- `assets/` — icon, screenshots and the Open Graph card, generated from the app
+- `assets/` — the icon, the Open Graph card and `shots/`, the screenshots
 
-Screenshots and the Open Graph card are produced from the app itself by
-`Tools/GenerateScreenshots.swift` and `Tools/GenerateOpenGraph.swift` in the app
-repository, not edited by hand.
+The screenshots are real captures of the app, not mock-ups: the iPhone 17 Pro
+Max simulator running `-demo`, once in light and once in dark, with the status
+bar set to 9:41. The LLM sequence is one real change carried through the app —
+the request typed into Copy for LLM, a reply pasted back, its review, then
+Today after Apply. Each capture is scaled to 720 px wide and saved twice, as
+AVIF (about 30 KB) and as a JPEG fallback; the page picks light or dark with
+`prefers-color-scheme`.
+
+```bash
+sips -Z 1564 capture.png --out name-light.png
+sips -s format avif -s formatOptions 60 name-light.png --out name-light.avif
+sips -s format jpeg -s formatOptions 82 name-light.png --out name-light.jpg
+```
+
+The Open Graph card is made by `Tools/GenerateOpenGraph.swift` in the app
+repository from the icon and the light review capture, not edited by hand.
+The App Store frames are `Tools/GenerateScreenshots.swift`, also there.

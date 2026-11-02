@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy — Trackload</title>
-<meta name="description" content="Trackload collects nothing. No account, no analytics, no crash reporting, no third-party SDKs. Your training log is one file on your phone.">
+<meta name="description" content="Trackload collects nothing. No account, no analytics, no crash reporting, no third-party SDKs. Your training log stays on your phone, and in your own iCloud if you turn backup on.">
 <link rel="canonical" href="https://trackload.enalmar.uk/privacy.html">
 <meta property="og:title" content="Trackload — Privacy">
 <meta property="og:description" content="Trackload collects nothing.">
@@ -12,75 +12,98 @@
 <meta property="og:url" content="https://trackload.enalmar.uk/privacy.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
 <style>
+/* The landing page's tokens: the app's Teal palette, light and dark. */
 :root {
-  --bg: #0E0E12; --text: #F5F5F7; --muted: #9C9CA4; --border: #2C2C2E; --coral: #FF6B6A;
-  --gutter: clamp(20px, 5vw, 40px);
+  --ground: #F2F2F7;
+  --card: #FFFFFF;
+  --ink: #000000;
+  --muted: #5B5B60;
+  --hairline: rgba(60, 60, 67, 0.16);
+  --tint: #0A7285;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
+  --gutter: clamp(16px, 5vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #000000;
+    --card: #1C1C1E;
+    --ink: #FFFFFF;
+    --muted: #A1A1A8;
+    --hairline: rgba(235, 235, 245, 0.16);
+    --tint: #40C8E0;
+  }
 }
 *, *::before, *::after { box-sizing: border-box; }
-html {
-  background: var(--bg);
-  -webkit-text-size-adjust: 100%;
-}
+html { background: var(--ground); -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; background: transparent; color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
-  font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
-/* The same fixed ambient field as the landing page: never seams, and it is the
-   one place the solar sweep appears. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(120vmax 80vmax at 8% -20%,
-      rgba(255, 176, 122, 0.13), rgba(255, 107, 106, 0.06) 38%, transparent 68%),
-    radial-gradient(90vmax 70vmax at 100% 8%,
-      rgba(255, 115, 147, 0.08), rgba(194, 102, 160, 0.04) 40%, transparent 70%);
-}
-a { color: var(--text); text-decoration-color: var(--muted); text-underline-offset: 3px; }
-a:hover { text-decoration-color: var(--coral); }
-a:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 4px; }
+a { color: var(--tint); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:focus-visible { outline: 2px solid var(--tint); outline-offset: 3px; border-radius: 4px; }
 .wrap { max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
-header { padding: clamp(48px, 9vw, 96px) 0 8px; }
-.back { font-size: 15px; color: var(--muted); text-decoration: none; }
-.back:hover { color: var(--text); }
+header { padding: 40px 0 8px; }
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+.back img { width: 28px; height: 28px; border-radius: 7px; display: block; }
 h1 {
-  font-size: clamp(38px, 6.5vw, 60px); line-height: 1.05; letter-spacing: -0.032em;
-  font-weight: 700; margin: 22px 0 0; text-wrap: balance;
+  font-family: var(--display);
+  font-size: clamp(38px, 6vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin: 40px 0 12px;
 }
-.updated { color: var(--muted); font-size: 15px; margin-top: 12px; }
 h2 {
-  font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted); font-weight: 600; margin: 48px 0 14px;
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 44px 0 10px;
 }
-p { margin: 0 0 18px; }
-p:last-child { margin-bottom: 0; }
-main { padding-bottom: 24px; }
+p { margin: 0 0 14px; }
+.updated { color: var(--muted); font-size: 15px; }
+.lede { font-size: 19px; color: var(--muted); margin-top: 18px; }
+main { padding-bottom: 72px; }
 footer {
-  border-top: 1px solid var(--border); margin-top: 64px; padding: 36px 0 64px;
-  color: var(--muted); font-size: 15px;
+  border-top: 1px solid var(--hairline);
+  padding: 28px 0 56px;
+  color: var(--muted);
+  font-size: 15px;
 }
-footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
-}
+footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; justify-content: space-between; }
+footer nav { display: flex; gap: 24px; }
+footer p { margin: 0; }
 </style>
 </head>
 <body>
 
 <header class="wrap">
-  <a class="back" href="./">← Trackload</a>
-  <h1>Privacy</h1>
-  <p class="updated">Last updated 28 August 2026</p>
+  <a class="back" href="./"><img src="assets/icon.png" alt="" width="28" height="28">Trackload</a>
 </header>
 
 <main class="wrap">
+
+<h1>Privacy</h1>
+<p class="updated">Last updated 2 November 2026</p>
+<p class="lede">Trackload collects nothing, and has no server to send anything to. This page says where your training is kept, and what leaves your phone only when you turn it on.</p>
 
 <h2>What is collected</h2>
 <p>Nothing. Trackload has no account, no sign-up and no login. It contains no analytics, no crash reporting, no advertising identifiers and no third-party SDKs of any kind. There is no server behind it, so there is nowhere for your training data to be sent.</p>
@@ -90,19 +113,29 @@ footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
 
 <h2>iCloud</h2>
 <p>Optional, and off unless you turn it on. When it is on, that same file is copied into your own private iCloud container, so your history survives deleting the app and reaches your other devices. It goes to Apple, under your Apple Account. The developer has no access to it and no way to read it.</p>
+<p>With backup on, Trackload also keeps a folder called Trackload in your iCloud Drive, so you can use your plan and history on a Mac. It holds the program you are running as a text file (program.txt), each program you have made, your current weights (lifts.csv) and your logged sets and sessions as CSV files. You can see it in the Files app and in Finder, and anything that can read your iCloud Drive can read it. The app reads back program.txt, and only to show you an edit for review. The folder stays after you delete the app, until you remove it.</p>
+<p>If you used iCloud backup in Trackload 1.0, the folder also holds that version's backup, rack-training.json: a copy of your training as it stood in 1.0. Trackload 2.0 reads it so that sessions logged on a phone still running 1.0 come across, and never changes or deletes it.</p>
+
+<h2>Changing your plan with an LLM</h2>
+<p>Copy for LLM puts your plan, your current weights and your recent training on the clipboard as text. Trackload sends nothing to any LLM or any other service: you choose whether to paste it, and where. A reply you paste back is read on your phone and applied only when you confirm it.</p>
+
+<h2>In-app purchase</h2>
+<p>Five changes made with an LLM are free, and one optional, one-time purchase unlocks more. The purchase is made through the App Store and handled entirely by Apple; the developer receives no payment details and no information about who you are. The app checks the purchase with Apple's own signed records on your device.</p>
+<p>To keep count of the free changes, the app stores one number — how many you have used — in your iCloud Keychain, alongside your passwords. It stays there if you delete the app, so the free changes are not handed out again on reinstall. It contains nothing else and never leaves Apple's services.</p>
 
 <h2>Health</h2>
-<p>Optional, and off unless you turn it on. With your permission, finished sessions are written to the Health app as strength training workouts, so they appear in Fitness alongside everything else you do.</p>
-<p>Trackload also reads a small amount of data from Health — body mass, resting heart rate and date of birth — to work out heart rate zones and estimate a session's energy cost. That data is used in memory during a session only. It is never written to the file on your phone, never copied to iCloud, and never transmitted anywhere.</p>
+<p>Optional, and off unless you turn it on. With your permission, finished sessions are written to the Health app as strength training workouts, so they appear in Fitness alongside everything else you do. A saved workout includes an estimate of the energy it used, when a body mass is on file, and the heart rate from a connected strap, if you used one.</p>
+<p>When you turn on Health writing or connect a heart rate strap, Trackload also asks to read a small amount of data from Health — body mass, resting heart rate, date of birth and the highest heart rate on record in the last two years — to work out heart rate zones and estimate a session's energy cost. That data is used in memory only. It is never written to the file on your phone, never copied to iCloud, and never transmitted anywhere.</p>
 
 <h2>Bluetooth</h2>
 <p>Optional, and only used if you choose to connect one. Trackload can pair with a standard Bluetooth heart rate strap to show your heart rate during a session. The app remembers which strap you last used, so it can reconnect without asking again; that identifier is stored on your device and nowhere else. If you never connect a strap, the app never uses Bluetooth.</p>
 
 <h2>Children</h2>
-<p>Trackload collects no data from anyone, so it collects no data from children. It contains no advertising, no in-app purchases, no chat and no user-generated content.</p>
+<p>Trackload collects no data from anyone, so it collects no data from children. It contains no advertising, no chat and no user-generated content. Its one optional in-app purchase is made through the App Store, where Apple's family controls, such as Ask to Buy, apply.</p>
 
 <h2>Deleting your data</h2>
-<p>Delete the app. With iCloud backup off, everything goes with it. With iCloud backup on, the copy in your iCloud container remains until you remove it, which you can do in Settings → your name → iCloud → Manage Account Storage. Inside the app, Settings → Erase everything clears the log without deleting the app.</p>
+<p>Delete the app. With iCloud backup off, your log goes with it. With iCloud backup on, the copy in your iCloud container remains until you remove it, which you can do in Settings → your name → iCloud → Manage Account Storage, and so does the Trackload folder in iCloud Drive, which you can delete in the Files app. Inside the app, Settings → Erase everything clears the log without deleting the app.</p>
+<p>Either way, the count of free LLM changes used stays in your iCloud Keychain. It is a single number and identifies nothing about you.</p>
 
 <h2>Changes to this policy</h2>
 <p>If this policy changes, the date at the top of this page changes with it. Trackload collects nothing today, and any change to that would come with a new version of the app and an updated App Store privacy label.</p>
@@ -114,7 +147,7 @@ footer nav { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
 
 <footer>
   <div class="wrap">
-    <nav>
+    <nav aria-label="Footer">
       <a href="./">Home</a>
       <a href="support.html">Support</a>
     </nav>
