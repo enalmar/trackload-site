@@ -109,18 +109,39 @@ p { margin: 0; }
 }
 .button:hover { transform: translateY(-1px); }
 
-/* ---- Phones: 720 × 1564 captures with the device's own corner ---- */
-.phone { container-type: inline-size; margin: 0; }
+/* ---- Phones: 720 × 1564 captures, framed as an iPhone ----
+   The bezel is the image's own border, so the capture keeps its shape;
+   the Dynamic Island sits over the status bar, between the time and the
+   signal. Sizes are in cqi: a share of the phone's own width. */
+.phone { container-type: inline-size; position: relative; margin: 0; --bezel: #111114; --edge: rgba(0, 0, 0, 0.28); }
 .phone img {
   display: block;
+  box-sizing: border-box;
   width: 100%;
   height: auto;
-  border-radius: 36px;
-  border-radius: 12.5cqi;
+  border: 10px solid var(--bezel);
+  border: 3.4cqi solid var(--bezel);
+  border-radius: 46px;
+  border-radius: 15.5cqi;
   box-shadow: var(--shadow);
-  outline: 1px solid var(--hairline);
-  outline-offset: -1px;
+  outline: 1px solid var(--edge);
+  outline-offset: 0;
   background: var(--card);
+}
+.phone::after {
+  content: "";
+  position: absolute;
+  top: 5.6cqi;
+  left: 50%;
+  width: 29cqi;
+  height: 8.6cqi;
+  translate: -50% 0;
+  border-radius: 99px;
+  background: #000;
+  pointer-events: none;
+}
+@media (prefers-color-scheme: dark) {
+  .phone { --bezel: #1E1E21; --edge: rgba(255, 255, 255, 0.2); }
 }
 
 /* ---- Hero ---- */
@@ -476,8 +497,8 @@ footer nav { display: flex; gap: 24px; }
     <div class="fan">
       <figure class="phone">
         <picture>
-          <source srcset="assets/shots/copy-dark.jpg" media="(prefers-color-scheme: dark)">
-          <img src="assets/shots/copy-light.jpg" width="720" height="1564" alt="A request typed into Trackload, ready to copy to an LLM.">
+          <source srcset="assets/shots/session-dark.jpg" media="(prefers-color-scheme: dark)">
+          <img src="assets/shots/session-light.jpg" width="720" height="1564" alt="A workout in progress: bench press at 82.5 kg with two sets done, and the rest timer running.">
         </picture>
       </figure>
       <figure class="phone">
